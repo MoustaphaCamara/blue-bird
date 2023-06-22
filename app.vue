@@ -13,21 +13,22 @@
             </div>
           </div>
           <!-- MAIN CONTENT -->
-          <main class="col-span-12 bg-red-500 md:col-span-8 xl:col-span-6">
-            main
+          <main class="col-span-12 md:col-span-8 xl:col-span-6">
+            <!-- pages -> index.vue -->
+            <router-view />
           </main>
           <!-- RIGHT SIDE -->
-          <!-- LEFT SIDE -->
           <div class="hidden md:col-span-3 md:block xl:col-span-4">
             <div class="sticky top-0">
               <SidebarRight />
             </div>
           </div>
         </div>
+        <!-- end of page container -->
       </div>
     </div>
   </div>
 </template>
 <script setup>
-const darkMode = ref(true);
+const darkMode = ref(false);
 </script>

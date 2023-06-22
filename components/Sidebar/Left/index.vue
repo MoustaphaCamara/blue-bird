@@ -84,5 +84,3 @@ import {
   DotsCircleHorizontalIcon,
 } from "@heroicons/vue/outline";
 </script>
-
-<style lang="scss" scoped></style>
