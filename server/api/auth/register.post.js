@@ -3,6 +3,7 @@ export default defineEventHandler(async (event) => {
   const body = await readBody(event);
 
   const { username, email, password, repeatPassword, name } = body;
+  //   missing parameter
   if (!username || !email || !password || !repeatPassword || !name) {
     return sendError(
       event,
@@ -12,6 +13,7 @@ export default defineEventHandler(async (event) => {
       })
     );
   }
+
   return {
     body: body,
   };
