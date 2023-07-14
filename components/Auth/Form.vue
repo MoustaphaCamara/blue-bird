@@ -20,12 +20,24 @@
 </template>
 
 <script setup>
+const { login } = useAuth();
 const data = reactive({
   password: "",
   username: "",
+  loading: false,
 });
 
-function handleLogin() {
-  alert(JSON.stringify(data));
+async function handleLogin() {
+  try {
+    data.loading = true;
+    await login({
+      username: data.username,
+      password: data.password,
+    });
+  } catch (error) {
+    console.log(error);
+  } finally {
+    data.loading = false;
+  }
 }
 </script>
