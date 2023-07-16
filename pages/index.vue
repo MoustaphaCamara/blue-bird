@@ -1,6 +1,10 @@
 <template>
   <div>
-    <MainSection title="Home" :loading="loading"> {{ user }} </MainSection>
+    <MainSection title="Home" :loading="loading" class="dark:text-white">
+      {{ user }}
+
+      <TweetForm :user="user" />
+    </MainSection>
   </div>
 </template>
 
