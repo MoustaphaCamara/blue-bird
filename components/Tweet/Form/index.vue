@@ -1,8 +1,15 @@
 <template>
-  <TweetFormInput :user="props.user" @onSubmit="handleFormSubmit" />
+  <div v-if="loading" class="flex items-center justify-center py-6">
+    <UILoader />
+  </div>
+
+  <div v-else>
+    <TweetFormInput :user="props.user" @onSubmit="handleFormSubmit" />
+  </div>
 </template>
 
 <script setup>
+const loading = ref(false);
 const { postTweet } = useTweets();
 
 const props = defineProps({
@@ -13,11 +20,17 @@ const props = defineProps({
 });
 
 async function handleFormSubmit(data) {
+  loading.value = true;
   try {
-    const response = await postTweet(data);
-    console.log(response);
+    const response = await postTweet({
+      text: data.text,
+      mediaFiles: data.mediaFiles,
+    });
+    alert(JSON.stringify(response));
   } catch (error) {
     console.log(error);
+  } finally {
+    loading.value = false;
   }
 }
 </script>

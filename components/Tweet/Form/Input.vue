@@ -12,18 +12,27 @@
         <textarea
           v-model="text"
           class="h-12 w-full border-0 bg-transparent text-lg text-gray-900 placeholder:text-gray-400 focus:ring-0 dark:text-white"
+          placeholder="What's poppin ?"
         ></textarea>
       </div>
     </div>
 
     <!-- File selector -->
 
+    <img
+      :src="inputImageUrl"
+      v-if="inputImageUrl"
+      alt=""
+      class="rounded-2xl border"
+      :class="twitterBorderColor"
+    />
     <div class="p-4 pl-16">
       <input
         type="file"
         hidden
         ref="imageInput"
         accept="image/png, image/gif, image/jpeg, image/jpg"
+        @change="handleImageChange"
       />
     </div>
     <!-- ICONS -->
@@ -110,13 +119,19 @@
     </div>
 
     <div>
+      <UIButton> Tweet </UIButton>
       <button @click="handleFormSubmit">Tweet</button>
     </div>
   </div>
 </template>
 
 <script setup>
+const { twitterBorderColor } = useTailwindConfig();
+
 const imageInput = ref();
+const selectedFile = ref(null);
+const inputImageUrl = ref(null);
+
 const emits = defineEmits(["onSubmit"]);
 const text = ref("");
 
@@ -130,12 +145,23 @@ const props = defineProps({
 function handleFormSubmit() {
   emits("onSubmit", {
     text: text.value,
+    mediaFiles: [selectedFile.value],
   });
 }
 function handleImageClick() {
   // allows me to use the input's behaviour thanks to ref
   imageInput.value.click();
 }
-</script>
 
-<!-- 3:40:00 -->
+function handleImageChange(event) {
+  const file = event.target.files[0];
+  selectedFile.value = file;
+
+  const reader = new FileReader();
+
+  reader.onload = (event) => {
+    inputImageUrl.value = event.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+</script>
