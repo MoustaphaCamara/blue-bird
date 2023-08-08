@@ -24,6 +24,12 @@ export default defineEventHandler(async (event) => {
     //https://github.com/prisma/prisma/discussions/2677
     authorId: userId,
   };
+
+  const replyTo = fields.replyTo;
+  if (replyTo && replyTo !== "null") {
+    tweetData.replyToId = replyTo;
+  }
+
   const tweet = await createTweet(tweetData);
 
   const filePromises = Object.keys(files).map(async (key) => {
